@@ -2,12 +2,11 @@ package Bot;
 
 import Bash.BashQuote;
 import CleverBot.CleverBot;
-import Exceptions.ImageSearchException;
-import Google.GoogleSearch;
-import Google.GoogleSearchException;
-import Google.GoogleSearchResult;
+import SearchEngine.GoogleSearch;
+import SearchEngine.GoogleSearchResult;
+import SearchEngine.RandomEngineImageSearch;
+import SearchEngine.SearchEngineException;
 import Utils.ImageDownload;
-import Utils.ImageSearch;
 import Utils.LogWriter;
 import Utils.PropertyManager;
 import org.telegram.telegrambots.TelegramApiException;
@@ -169,10 +168,10 @@ public final class Bot extends TelegramLongPollingBot {
         try {
             sendChatAction("upload_photo", chatId);
 
-            String imgUrl = ImageSearch.getRandomImage(searchTerm);
+            String imgUrl = RandomEngineImageSearch.getRandomImage(searchTerm);
             String imgPath = ImageDownload.download(imgUrl, searchTerm);
             sendPhoto(imgPath, chatId, replyTo);
-        } catch (ImageSearchException | IOException e) {
+        } catch (SearchEngineException | IOException e) {
             sendMsg(e.getMessage(), chatId, replyTo);
             LogWriter.e("sendPicture", e);
         }
@@ -227,7 +226,7 @@ public final class Bot extends TelegramLongPollingBot {
             GoogleSearch googleSearch = new GoogleSearch(searchTerm, "youtube.com");
             GoogleSearchResult searchResult = googleSearch.get();
             sendMsg(searchResult.getUnescapedUrl(), chatId, replyTo);
-        } catch (GoogleSearchException e) {
+        } catch (SearchEngineException e) {
             LogWriter.e("sendYoutubeLink", e);
         }
     }

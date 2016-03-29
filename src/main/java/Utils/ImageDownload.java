@@ -1,6 +1,6 @@
 package Utils;
-
-import Exceptions.ImageSearchException;
+import SearchEngine.SearchEngineException;
+import org.apache.http.util.TextUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,13 +12,17 @@ import java.util.ArrayList;
 
 public class ImageDownload {
 
-    public static String download(String sourceUrl, String query) throws IOException, ImageSearchException {
+    public static String download(String sourceUrl, String query) throws IOException, SearchEngineException {
         return download(sourceUrl, query, String.valueOf(System.currentTimeMillis()));
     }
 
-    public static String download(String sourceUrl, String query, String filePostfix) throws IOException, ImageSearchException {
+    public static String download(String sourceUrl, String query, String filePostfix) throws IOException, SearchEngineException {
 
         LogWriter.d("Get: " + sourceUrl + ", query=" + query + ", filePosfix=" + filePostfix);
+
+        if(TextUtils.isEmpty(sourceUrl)) {
+            throw new SearchEngineException("Не могу отправить то, чего нет.");
+        }
 
         PropertyManager propertyManager = PropertyManager.getInstance();
         String cacheDir = propertyManager.getCacheDir();
@@ -52,7 +56,7 @@ public class ImageDownload {
             int contentLength = httpConn.getContentLength();
 
             if (contentType == null || !contentType.contains("image") || contentType.equals("image/gif")) {
-                throw new ImageSearchException("Я не умею отправлять гифки.");
+                throw new SearchEngineException("Я не умею отправлять гифки.");
             }
 
             LogWriter.d("HTTP_OK:\n" + " - Content-Type = " + contentType + "\n"

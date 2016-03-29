@@ -1,4 +1,4 @@
-package Yandex;
+package SearchEngine;
 
 import Utils.LogWriter;
 import org.jsoup.Jsoup;

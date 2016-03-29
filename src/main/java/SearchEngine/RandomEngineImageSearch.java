@@ -1,21 +1,16 @@
-package Utils;
-
-import Azure.AzureImageSearch;
-import Exceptions.ImageSearchException;
-import Google.GoogleImageSearch;
-import Yandex.YandexImageSearch;
+package SearchEngine;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ImageSearch {
+public class RandomEngineImageSearch {
 
     private static final int GOOGLE = 0;
     private static final int YANDEX = 1;
     private static final int AZURE = 2;
 
-    public static String getRandomImage(String searchTerm) throws ImageSearchException {
+    public static String getRandomImage(String searchTerm) throws SearchEngineException {
 
         List<Integer> imageServices = Arrays.asList(YANDEX, GOOGLE, AZURE);
         Collections.shuffle(imageServices);
@@ -38,7 +33,7 @@ public class ImageSearch {
             }
         }
 
-        throw new ImageSearchException("Не нашёл");
+        throw new SearchEngineException("Не нашёл");
     }
 
 }

@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Command {
+class Command {
 
     private List<String> mAliases;
 
-    public Command(String... aliases) {
+    Command(String... aliases) {
         mAliases = Arrays.asList(aliases);
     }
 
-    public boolean containedIn(String message) {
+    boolean containedIn(String message) {
         return getQuery(message) != null;
     }
 
-    public boolean equalsMessage(String message) {
+    boolean equalsMessage(String message) {
         for (String cmd : mAliases) {
             if(cmd.equalsIgnoreCase(message))
                 return true;
@@ -24,7 +24,7 @@ public class Command {
         return false;
     }
 
-    public String getQuery(String message) {
+    String getQuery(String message) {
         String formattedMsg = message.trim().toLowerCase();
         for (String cmd : mAliases) {
             if (formattedMsg.contains(cmd)) {
@@ -34,7 +34,7 @@ public class Command {
         return null;
     }
 
-    public String getRandomAlias() {
+    String getRandomAlias() {
         return mAliases.get(new Random().nextInt(mAliases.size()));
     }
 }

@@ -1,4 +1,4 @@
-package Google;
+package SearchEngine;
 
 import org.json.JSONObject;
 

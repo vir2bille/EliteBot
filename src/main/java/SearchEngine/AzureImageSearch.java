@@ -1,4 +1,4 @@
-package Azure;
+package SearchEngine;
 
 import Utils.LogWriter;
 import org.apache.commons.codec.binary.Base64;

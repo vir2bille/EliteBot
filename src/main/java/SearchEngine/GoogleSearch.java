@@ -1,4 +1,4 @@
-package Google;
+package SearchEngine;
 
 import Utils.LogWriter;
 import Utils.RequestBuilder;
@@ -25,7 +25,7 @@ public class GoogleSearch {
         mSite = site;
     }
 
-    public GoogleSearchResult get() throws GoogleSearchException {
+    public GoogleSearchResult get() throws SearchEngineException {
 
         String requestUrl = SEARCH_URL
                 + "&q=" + (mSite != null ? ("site:" + mSite + "%20") : "") + mQuery;
@@ -35,8 +35,6 @@ public class GoogleSearch {
         try {
             String response = RequestBuilder.readUrl(requestUrl);
 
-            System.out.println("r=" + response);
-
             JSONObject responseJson = new JSONObject(response).getJSONObject("responseData");
             JSONArray resultsArray = responseJson.getJSONArray("results");
 
@@ -45,7 +43,7 @@ public class GoogleSearch {
             }
         } catch (IOException e) {
             LogWriter.e("IOException", e);
-            throw new GoogleSearchException("Не нашёл.");
+            throw new SearchEngineException("Не нашёл.");
         }
 
         return null;

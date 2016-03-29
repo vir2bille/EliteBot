@@ -1,4 +1,4 @@
-package Google;
+package SearchEngine;
 
 import Utils.LogWriter;
 import Utils.RequestBuilder;
